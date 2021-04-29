@@ -3,6 +3,8 @@ const morgan = require("morgan");
 const views = require("./views");
 const layout = require("./views/layout");
 const { db, Page, User } = require("./models");
+const wiki = require('./routes/wiki')
+// const users = require('./routes/users')
 
 const app = express();
 
@@ -19,9 +21,12 @@ const init = async () => {
 app.use(morgan("dev"));
 app.use(express.static(__dirname + "/public"));
 app.use(express.urlencoded({ extended: false }));
+app.use('/wiki', wiki);
+// app.use('/users', users);
+
 
 app.get("/", (req, res) => {
-  res.send(layout(" "));
+  res.redirect("/wiki");
 });
 
 app.listen(1337, () => {
